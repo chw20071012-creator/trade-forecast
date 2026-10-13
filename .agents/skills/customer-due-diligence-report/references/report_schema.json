@@ -1,0 +1,35 @@
+{
+  "title": "Company Name 客户背调报告",
+  "subtitle": "调查对象：Company Name / Brand / Domain",
+  "date": "YYYY-MM-DD",
+  "source_summary": "资料来源：官网、企业注册、域名、商标、投诉、媒体、贸易数据库",
+  "footer": "Company Name 客户背调报告 | YYYY-MM-DD",
+  "executive_summary": [
+    "第一段：公司真实性、主营业务、所在国家/地区。",
+    "第二段：综合评级、主要机会、主要风险、合作建议。"
+  ],
+  "key_facts": [
+    ["综合评级", "B+ / 可接触，首单建议预付款或小单试合作。"],
+    ["主体真实性", "高/中/未确认。"],
+    ["主要风险", "列出最重要风险。"]
+  ],
+  "sections": [
+    {
+      "heading": "1. 主体与域名核验",
+      "paragraphs": ["本节正文。"],
+      "table": {
+        "headers": ["项目", "公开线索", "判断"],
+        "rows": [["示例", "示例", "示例"]],
+        "widths": [1.35, 3.0, 2.15]
+      },
+      "bullets": ["要点 1", "要点 2"]
+    }
+  ],
+  "recommendations": [
+    "要求对方提供营业执照/注册文件、税号、银行账户证明。",
+    "首单建议预付款或发货前结清。"
+  ],
+  "sources": [
+    ["来源名称", "https://example.com/"]
+  ]
+}

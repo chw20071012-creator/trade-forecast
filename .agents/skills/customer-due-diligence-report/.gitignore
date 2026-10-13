@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.tmp
+*.log
+*.docx
+*.pdf
+*.json.bak
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+interface:
+  display_name: "客户背调报告"
+  short_description: "生成客户尽调与合作风控Word报告"
+  default_prompt: "Use $customer-due-diligence-report to investigate this customer and generate a Word due diligence report."
+
+policy:
+  allow_implicit_invocation: true

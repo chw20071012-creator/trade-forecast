@@ -1,0 +1,80 @@
+[
+  {
+    "requested_name": "foreign-trade-leads",
+    "status": "verified_exact",
+    "repository": "LeftenantZero/OpenClawSkillsMirror",
+    "path": "skills/xingfan0828/foreign-trade-leads",
+    "commit": "2bdbe764e68965e0c2257d1260618c0d6033c183",
+    "source_publisher": "xingfan0828",
+    "license_claim": "MIT-0 (skill-card.md)",
+    "execution": "Selenium Chrome Google Maps scraper",
+    "limits": [
+      "email output always empty",
+      "selectors and real network execution not validated",
+      "no email enrichment",
+      "platform rate limits"
+    ],
+    "installed_name": "foreign-trade-leads"
+  },
+  {
+    "requested_name": "foreign-trade-email-writer",
+    "status": "verified_exact_mirror_incomplete",
+    "repository": "Sisen-001/qclaw-skills",
+    "path": "growth/foreign-trade-email-writer",
+    "commit": "6277f8c1dae0902d0bfb284ba10e98350288c872",
+    "license_claim": "MIT root LICENSE + SKILL.md",
+    "execution": "Bash template generator + Python Gmail sender + Tavily search",
+    "limits": [
+      "documented PowerShell wrappers absent",
+      "source/homepage are placeholder yourusername URLs",
+      "sending lacks confirmation gate",
+      "no market-based pricing engine"
+    ],
+    "installed_name": "foreign-trade-email-writer"
+  },
+  {
+    "requested_name": "trade-inquiry-agent",
+    "status": "verified_exact_prompt_only",
+    "repository": "AaronNee520/trade-inquiry-agent",
+    "path": ".",
+    "commit": "7fac4307e38751b02ddba1ee70a5b2c267765093",
+    "license_claim": "MIT in README, no LICENSE file",
+    "execution": "SKILL.md + three reference documents",
+    "limits": [
+      "no scripts/API",
+      "pricing formulas simplified",
+      "profit percentages are advisory not market data"
+    ],
+    "installed_name": "trade-inquiry-agent"
+  },
+  {
+    "requested_name": "customer-due-diligence",
+    "status": "exact_source_unverified_alternative_available",
+    "alternative_name": "customer-due-diligence-report",
+    "repository": "cnproduct/customer-due-diligence-report-skill",
+    "path": ".",
+    "commit": "d13f7401f20faa3fb0e9b01bd9de4583ba650207",
+    "license_claim": "MIT with full LICENSE",
+    "execution": "research SOP + Python DOCX report builder",
+    "limits": [
+      "research depends on host web tools",
+      "sync_from_codex_skill.ps1 is maintainer script with automatic git push, do not run"
+    ],
+    "installed_name": "customer-due-diligence-report"
+  },
+  {
+    "requested_name": "check-trade-document-consistency",
+    "status": "exact_source_unverified_alternative_available",
+    "alternative_name": "verify-docs",
+    "repository": "Dangooy/tianji-skills",
+    "path": "verify-docs",
+    "commit": "99ae9d2f6c6c6d41ec92a637d6298aa56d01fa91",
+    "license_claim": "MIT with root LICENSE",
+    "execution": "Excel document comparison SOP + demo files",
+    "limits": [
+      "no bundled deterministic checker",
+      "only XLSX CI/PL workflow"
+    ],
+    "installed_name": "verify-docs"
+  }
+]

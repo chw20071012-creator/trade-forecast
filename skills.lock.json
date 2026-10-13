@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "installed_at": "2026-10-11",
+  "install_root": ".agents/skills",
+  "skills": [
+    {
+      "name": "foreign-trade-leads",
+      "repository": "LeftenantZero/OpenClawSkillsMirror",
+      "commit": "2bdbe764e68965e0c2257d1260618c0d6033c183",
+      "source_path": "skills/xingfan0828/foreign-trade-leads",
+      "license": "MIT-0 (publisher skill card)",
+      "mode": "needs_adapter",
+      "notes": [
+        "Google Maps scraper not validated online",
+        "email output always empty"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "ecd9f48cc37adf3ec103b332a94214aad29df92cc24d3eaa8199f66415d26aaf",
+        "_meta.json": "15e09a9479d212a758fbf694b1df2f903d0d7e3c4ee3da6682f7ece24a4eaa68",
+        "_scrape_meta.json": "7c6560598236712fc38a4a1784f24cbf26a52bf4f1cf189079848aa8b2df325a",
+        "scripts/get_google_maps_leads.py": "e2d0e60df155d6b5208c5d33f031085406b46b24eee3b82d81f8b9bd33816afe",
+        "skill-card.md": "4938e43f71ef08e377a09e96d025478aa0c1ca2b76847f1b01a32335dc3a724e"
+      }
+    },
+    {
+      "name": "foreign-trade-email-writer",
+      "repository": "Sisen-001/qclaw-skills",
+      "commit": "6277f8c1dae0902d0bfb284ba10e98350288c872",
+      "source_path": "growth/foreign-trade-email-writer",
+      "license": "MIT",
+      "mode": "reference_only",
+      "notes": [
+        "Missing documented PowerShell wrappers",
+        "Generic templates invent certifications and market claims unless replaced with verified facts",
+        "Direct Gmail send has no confirmation gate; never expose sender as an autonomous tool"
+      ],
+      "excluded_files": [],
+      "files": {
+        "CHANGELOG.md": "7c87ad2db9fc38d7227dfd41729cddcc32d3cd4bda299961529584bc71c6fcb2",
+        "README.md": "5f882bfd75967a6988355041d60ac5f4007bd4493cfe3d2ce5e531970ed412c5",
+        "SETUP.md": "fe401cca728cbf03075218c587c311ab02c9096db5ead10c033ccc07fe6f7e11",
+        "SKILL.md": "5390f7a6a90a5020c684e9d02118d55a16722a9e310044b2bd8a099a2cd87d76",
+        "SOURCE_REPOSITORY_LICENSE": "a3d65d61d2a32e5fc0f78512ad375769c432b3f44aaadfb335939801a23beed3",
+        "_meta.json": "3f4ec3c521a8f43b2deeb52395e073f8294e7799a29f2483773399d240c8201c",
+        "scripts/b2b-cold.sh": "e08329701501e449d91ad04b81d6df076da6832bc7316b289e9083706acb1288",
+        "scripts/gmail_sender.py": "b7a6a4b74545208c05eecb69c043e3395f0dab93b72183f64b036d2c1056963e",
+        "scripts/send_gmail.py": "e3c5663a81b50150f74670769cef3ced6d85c0ae47167c0d34bf0fa6040f27fd",
+        "scripts/tavily_search.py": "98b164058ddad5ac22fd31da983876a5c2bd4ad57361e047768eb885a7bcf590"
+      }
+    },
+    {
+      "name": "trade-inquiry-agent",
+      "repository": "AaronNee520/trade-inquiry-agent",
+      "commit": "7fac4307e38751b02ddba1ee70a5b2c267765093",
+      "source_path": ".",
+      "license": "MIT declared in README; full license text absent",
+      "mode": "prompt_only",
+      "notes": [
+        "No real-time pricing or executable tool"
+      ],
+      "excluded_files": [],
+      "files": {
+        ".gitignore": "d1ac3ec22c621f3ee847995d7726e91d72409638880540d751cb3003956fbb83",
+        "README.md": "4631caf1c5bc8bdefe960a9789b664900e59c26be30410e05cefed55067f10b9",
+        "SKILL.md": "bfbcf24804420ac296426c1fb08441073dc89887efdd4e8ec61930d15e437f57",
+        "references/email_templates.md": "679a75f12f50bd67ef091712002ba65e43c424d3d611169f92b7495ad56e2be7",
+        "references/product_classification.md": "014ac2e6a7755ab526e41b302755f299e479894eded48426236ad811412fdd6f",
+        "references/quotation.md": "caae0822d3e46f3141c64275ba2c1c497e455dac41be6f99fc77c2ff7e81f9bc"
+      }
+    },
+    {
+      "name": "customer-due-diligence-report",
+      "repository": "cnproduct/customer-due-diligence-report-skill",
+      "commit": "d13f7401f20faa3fb0e9b01bd9de4583ba650207",
+      "source_path": ".",
+      "license": "MIT",
+      "mode": "research_prompt_and_report_builder",
+      "notes": [
+        "Different-name supplement for unverified customer-due-diligence",
+        "Web research needs host tools; absolute paths in examples must be adapted"
+      ],
+      "excluded_files": [
+        "sync_from_codex_skill.ps1"
+      ],
+      "files": {
+        ".gitignore": "c4a0a4d303d9acce8f3bce2fb98c58fa8a9d80c9a68588fd43a08cc5d7fde245",
+        "LICENSE": "98315531974f056ec92fcc131add3c278647306afc441b0a72f7e0343491a1b0",
+        "README.md": "304f515ef6b8c951f1633e3fde33aaf5187755c87ea84e69a34a1a161cb48c6c",
+        "SKILL.md": "5623b2d3a101217dcf513ea349f8b3ea31dbf7c9cc3ac2a680bd7b12ffd65220",
+        "agents/openai.yaml": "e0855eea2838959ad8b780ce2b1bd360dada3e2e0e1af9195680a8b26ddf644d",
+        "references/report_schema.json": "72b0d7bb2f19767df0cd2943598fe100a78a74bd5ee41d1bd54c5d6f42cfa0db",
+        "scripts/build_due_diligence_docx.py": "d6aa86942d94e693b5f497c18df6c76a978ca0cee876c4be9a794e39d98571c6"
+      }
+    },
+    {
+      "name": "verify-docs",
+      "repository": "Dangooy/tianji-skills",
+      "commit": "99ae9d2f6c6c6d41ec92a637d6298aa56d01fa91",
+      "source_path": "verify-docs",
+      "license": "MIT",
+      "mode": "prompt_and_examples",
+      "notes": [
+        "Different-name supplement for unverified check-trade-document-consistency",
+        "XLSX-only SOP; no deterministic checker bundled"
+      ],
+      "excluded_files": [],
+      "files": {
+        "README.md": "ca71c10c278c38673362d7529ef94da255722a7ff35f296a394fbf11b6a9e074",
+        "SKILL.md": "c2455d2a892e495d93647a3f7ae40847cf992aa3b885e846dee3eff55c9a67ca",
+        "SOURCE_REPOSITORY_LICENSE": "53ba2caa7c1cbf067d95fae4a3c73a0d7ec4758ad9851d6fc530e88dc526c6f2",
+        "examples/README.md": "9dcf1dfaa693b93c255f893d87f88e7cd689aaf3114b995d9f1b9cf2551e3d29",
+        "examples/demo_ci.xlsx": "02abad3e97c6a50857b163b47cfce99c99d074e225d78bece8287f0fa252030f",
+        "examples/demo_pl.xlsx": "622192d3cca70325a979c6edc8ad69f5d22d7537aa232e31903420251b171369",
+        "examples/generate_demo.py": "9d074a6f3dfd6e01547a6a8e13dc684ed6ea4dffc61a2f553310c9c68db89929"
+      }
+    },
+    {
+      "name": "gws-gmail",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "d37f41ad13fd3467d430e60dfb985d7818ef6976bae40182f8e46a410b8caa16",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-forward",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-forward",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "12ae58f8983a3010bc37d759667dfdad22e3920a3091d014c7f2b3ffe06ffb76",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-read",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-read",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "11707bc21b93381fa56a309364002b255b1a90c52aca51afa5965087657a69a5",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-reply",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-reply",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "0b453c4ec1b940ecd352faae13206e7ff543d841c8756d1c06c2b48a4e98e7af",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-reply-all",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-reply-all",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "095cee7197b2d9d984561075b7dbc3f28896a7e2498f0f1cb04f78fbf58dad37",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-send",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-send",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "5002f29ed58e3f14b826d4eadd917dd5f3e7f3ec8c6cbad7c61e4f340be519aa",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-triage",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-triage",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "48b0512b3ffa718ab382c3d816d6945cbc9ec6139b50eff0427498a645580600",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-gmail-watch",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-watch",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "c59aa44f22784debf51437d4a1617348e039bfc1ac4bf7b62d602ca13ffac5e1",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-shared",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-shared",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "87abfb41cdcc300b7f2f733d1558a8af8d3c2a7cca1512f9eba244965fad98b2",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-sheets",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-sheets",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "e0db8bb632b3425b6f10dac7b30c85a4ba6ed0fd8421bccd3d2242588cc02208",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-sheets-append",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-sheets-append",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "ef337f5249f50ef0209f95baf906b2d8a93fcc042797197423575518d96fbe6a",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "gws-sheets-read",
+      "repository": "googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-sheets-read",
+      "license": "Apache-2.0",
+      "mode": "requires_gws_oauth",
+      "notes": [
+        "Mail sending requires explicit per-draft user confirmation"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "2308eab564907f4d8789de030dadebf9187988a944a57da9ffd49ce7a4ecafef",
+        "SOURCE_REPOSITORY_LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    },
+    {
+      "name": "mcp-builder",
+      "repository": "anthropics/skills",
+      "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "source_path": "skills/mcp-builder",
+      "license": "Apache-2.0",
+      "mode": "development_skill",
+      "notes": [
+        "Build guidance; not itself a ChatGPT connection"
+      ],
+      "excluded_files": [],
+      "files": {
+        "LICENSE.txt": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+        "SKILL.md": "0f4592dcb53cf2b5d6b7febee6b4152018b565551a1c29e3c612f57b218ab295",
+        "reference/evaluation.md": "8c99479f8a2d22a636c38e274537aac3610879e26f34e0709825077c4576f427",
+        "reference/mcp_best_practices.md": "80fb4369a349447cf18ecdd7494fe7938b6065377e9f08c077cec411093a3007",
+        "reference/node_mcp_server.md": "c3ba35a4f599dd53be9c6555ae72c19a7bf412cd5426576c2c08d42755482c66",
+        "reference/python_mcp_server.md": "2da52f77e675191014ca2e146a4b95aa04d0ca7dd7e2b100322df15ade685e80",
+        "scripts/connections.py": "9403668a2041568772082a8b334122c1f88daf0541fb393af4522d0094a47a6e",
+        "scripts/evaluation.py": "49ed1d17cdce5da101b210197740713f49b935c29d4f339542a14b132658e6f7",
+        "scripts/example_evaluation.xml": "9272b348ddcc4b06ba562367ccd0770e018158c0068ac5116d5e34aaeff8777a",
+        "scripts/requirements.txt": "d5d7558b2368ecea9dfeed7d1fbc71ee9e0750bebd1282faa527d528a344c3c7"
+      }
+    },
+    {
+      "name": "playwright-cli",
+      "repository": "microsoft/playwright-cli",
+      "commit": "b85c7a736bb473bf55b584e54a09ffa698d6d871",
+      "source_path": "skills/playwright-cli",
+      "license": "Apache-2.0",
+      "mode": "requires_browser_runtime",
+      "notes": [
+        "Browser research; not a customer database"
+      ],
+      "excluded_files": [],
+      "files": {
+        "SKILL.md": "9bba755285a4c9ad72a4a41b9c7baef6fb516d329c0b44ed0573715f4479b906",
+        "SOURCE_REPOSITORY_LICENSE": "9a7110fc2d2f964038e5dc49128f908f29f47a574c961cba16085914e879cbda",
+        "references/element-attributes.md": "bf19aa4671e0a50a0fefa9c790f39124e803060eefe395042b723c29fcb7faa2",
+        "references/playwright-tests.md": "c5b0719fef2cfdff50bd744051b2f9afc119775db4b48e9b2882c1cf3886797c",
+        "references/pr-attachments.md": "24b118e74598be72e73e24fe223d295b9099c85b1860a7c8f6e5690c9038fa2a",
+        "references/request-mocking.md": "54e801c9663fc2b6d68ceb058cb1c360724c2499f42acc7852a68e83e5b5f37c",
+        "references/running-code.md": "3029569ed6ddaeffc0b87badde967efdc2973b1677f078830098146eb3b78ebe",
+        "references/session-management.md": "a4f16271f95d3eec7bc56e659d8adbb8f6ad7d603a6fa15efdcdd071a50c6ce3",
+        "references/storage-state.md": "9ac47f9ae4a1aedcd2077f8ac9ab1ba6bee1962cb83ff51adcd36fb6d83b5ec6",
+        "references/test-generation.md": "27ecb11ef647999bd7486695bb1aacc3682097e6bb5742804cb6c8769c2b5364",
+        "references/tracing.md": "ef73e71bee792e341df9cd4f60529c929ade48b538ac76e033f4f20843e8dbda",
+        "references/video-recording.md": "1c800b897824cb54394c34265d8ebffdbb530adfc8d612c5d798b667a1799f48"
+      }
+    }
+  ],
+  "unresolved_requested_skills": [
+    "customer-due-diligence",
+    "check-trade-document-consistency"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "changelog": "Initial public release: Google Maps B2B lead scraping skill",
+  "created_at": 1775106334713,
+  "display_name": "Foreign Trade Leads",
+  "fetched_at": 1787834914995,
+  "files": [
+    "SKILL.md",
+    "_meta.json",
+    "scripts/get_google_maps_leads.py",
+    "skill-card.md"
+  ],
+  "moderation": null,
+  "owner": {
+    "display_name": "Xingfan0828",
+    "handle": "xingfan0828",
+    "user_id": "s17crm29x5j7ry8q5144ayzz6983kfnp"
+  },
+  "slug": "foreign-trade-leads",
+  "source": {
+    "detail_url": "https://clawhub.ai/api/v1/skills/foreign-trade-leads",
+    "download_url": "https://clawhub.ai/api/v1/download?slug=foreign-trade-leads&ownerHandle=xingfan0828",
+    "page_url": "https://clawhub.ai/xingfan0828/skills/foreign-trade-leads"
+  },
+  "stats": {
+    "comments": 0,
+    "downloads": 792,
+    "installs": 20,
+    "stars": 0,
+    "versions": 1
+  },
+  "summary": "\u4ece Google Maps \u6293\u53d6 B2B \u5916\u8d38\u6f5c\u5728\u5ba2\u6237\u540d\u5355\u3002\u7528\u4e8e\u627e\u6d77\u5916\u5206\u9500\u5546\u3001\u6279\u53d1\u5546\u3001\u91c7\u8d2d\u5546\u3001\u672c\u5730\u5546\u5bb6\u7ebf\u7d22\uff1b\u89e6\u53d1\u8bcd\u5305\u62ec\u201c\u83b7\u5ba2\u201d\u201c\u627e\u5ba2\u6237\u201d\u201cGoogle Maps\u5ba2\u6237\u201d\u201c\u5916\u8d38\u5ba2\u6237\u540d\u5355\u201d\u3002",
+  "updated_at": 1778492362797,
+  "version": "1.0.0"
+}

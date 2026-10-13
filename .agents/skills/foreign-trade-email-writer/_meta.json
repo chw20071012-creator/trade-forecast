@@ -1,0 +1,26 @@
+{
+  "name": "foreign-trade-email-writer",
+  "version": "2.1.0",
+  "description": "B2B cold email sequence generator with Intelligence Hierarchy System and Gmail API integration",
+  "author": "Morment",
+  "source": "openclaw-workspace",
+  "tags": ["外贸", "邮件营销", "B2B", "Gmail", "客户开发"],
+  "license": "MIT",
+  "minOpenclawVersion": "2026.2.26",
+  "requirements": [
+    "Python 3.x",
+    "Gmail API credentials",
+    "Tavily API Key (可选，用于网站研究)"
+  ],
+  "files": [
+    "SKILL.md",
+    "_meta.json",
+    "README.md",
+    "SETUP.md",
+    "CHANGELOG.md",
+    "scripts/b2b-cold.sh",
+    "scripts/gmail_sender.py",
+    "scripts/send_gmail.py",
+    "scripts/tavily_search.py"
+  ]
+}

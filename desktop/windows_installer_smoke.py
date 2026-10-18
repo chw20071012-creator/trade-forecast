@@ -188,9 +188,11 @@ $paths = @([Environment]::GetFolderPath('DesktopDirectory'), [Environment]::GetF
         path = Path(value)
         assert path.is_file(), f"Missing shortcut: {location}"
         link = read_unicode_shortcut(path)
-        assert os.path.normcase(link["target"]) == os.path.normcase(str(executable)), f"Incorrect Unicode shortcut target: {location}"
-        assert os.path.normcase(link["directory"]) == os.path.normcase(str(destination)), f"Incorrect shortcut working directory: {location}"
-        assert os.path.normcase(link["icon"]) == os.path.normcase(str(executable)) and link["icon_index"] == 0, f"Incorrect shortcut icon: {location}"
+        # The Windows native test observed RUNNER~1 expanded to runneradmin.
+        # Require the same actual file/directory, allowing legitimate 8.3 aliases.
+        assert os.path.samefile(link["target"], executable), f"Incorrect Unicode shortcut target: {location}"
+        assert os.path.samefile(link["directory"], destination), f"Incorrect shortcut working directory: {location}"
+        assert os.path.samefile(link["icon"], executable) and link["icon_index"] == 0, f"Incorrect shortcut icon: {location}"
         rows.append({"location": location, "target_verified": True, "working_directory_verified": True, "icon_verified": True, "reader": "IShellLinkW"})
     (output / "shortcuts.json").write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
     smoke.note("Desktop and Start Menu shortcuts", "Both target the exact installed EXE and its working directory")

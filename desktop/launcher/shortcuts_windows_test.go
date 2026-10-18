@@ -6,11 +6,27 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"syscall"
 	"testing"
 	"unsafe"
 )
+
+func assertShortcutFileIdentity(t *testing.T, label, got, expected string) {
+	t.Helper()
+	actualInfo, err := os.Stat(got)
+	if err != nil {
+		t.Fatalf("%s target is not accessible: %q: %v", label, got, err)
+	}
+	expectedInfo, err := os.Stat(expected)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Windows CI returned runneradmin where TempDir used the RUNNER~1 8.3
+	// alias. Compare actual file identity while preserving the Unicode test.
+	if !os.SameFile(actualInfo, expectedInfo) {
+		t.Fatalf("%s points to a different file: %q != %q", label, got, expected)
+	}
+}
 
 func TestNativeShortcutUnicodePaths(t *testing.T) {
 	root := filepath.Join(t.TempDir(), "中文 资料")
@@ -58,14 +74,10 @@ func TestNativeShortcutUnicodePaths(t *testing.T) {
 	if err = comResult(link.call(3, uintptr(unsafe.Pointer(&path[0])), uintptr(len(path)), 0, 4), "Read Unicode target"); err != nil {
 		t.Fatal(err)
 	}
-	if got := syscall.UTF16ToString(path); !strings.EqualFold(filepath.Clean(got), filepath.Clean(target)) {
-		t.Fatalf("target differs: %q != %q", got, target)
-	}
+	assertShortcutFileIdentity(t, "target", syscall.UTF16ToString(path), target)
 	working := make([]uint16, 32768)
 	if err = comResult(link.call(8, uintptr(unsafe.Pointer(&working[0])), uintptr(len(working))), "Read Unicode working directory"); err != nil {
 		t.Fatal(err)
 	}
-	if got := syscall.UTF16ToString(working); !strings.EqualFold(filepath.Clean(got), filepath.Clean(root)) {
-		t.Fatalf("working directory differs: %q != %q", got, root)
-	}
+	assertShortcutFileIdentity(t, "working directory", syscall.UTF16ToString(working), root)
 }

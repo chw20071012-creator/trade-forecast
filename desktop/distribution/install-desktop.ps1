@@ -1,5 +1,14 @@
 ﻿Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+function Get-Sha256Hex([string]$FilePath) {
+    $hasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        $stream = [IO.File]::OpenRead($FilePath)
+        try {
+            return [BitConverter]::ToString($hasher.ComputeHash($stream)).Replace('-', '').ToLowerInvariant()
+        } finally { $stream.Dispose() }
+    } finally { $hasher.Dispose() }
+}
 try {
     if (-not [Environment]::Is64BitOperatingSystem) { throw '本软件需要64位 Windows 10 或 Windows 11。' }
     $source = [IO.Path]::GetFullPath($PSScriptRoot)
@@ -22,7 +31,7 @@ try {
             $outputFile = [IO.Path]::GetFullPath((Join-Path $stage $relative))
             if (-not $inputFile.StartsWith($source + '\', [StringComparison]::OrdinalIgnoreCase) -or -not $outputFile.StartsWith($stage + '\', [StringComparison]::OrdinalIgnoreCase)) { throw '软件包中包含无效路径。' }
             if (-not (Test-Path -LiteralPath $inputFile -PathType Leaf)) { throw "软件包不完整，缺少：$relative" }
-            $actual = (Get-FileHash -LiteralPath $inputFile -Algorithm SHA256).Hash
+            $actual = Get-Sha256Hex $inputFile
             if ($actual -ne [string]$entry.sha256) { throw "文件校验不通过，请重新下载完整软件包：$relative" }
             $null = New-Item -ItemType Directory -Force -Path ([IO.Path]::GetDirectoryName($outputFile))
             Copy-Item -LiteralPath $inputFile -Destination $outputFile

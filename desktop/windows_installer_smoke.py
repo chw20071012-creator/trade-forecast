@@ -180,7 +180,7 @@ def main():
     if not output.is_relative_to(runner_temp):
         parser.error("Output must be inside RUNNER_TEMP")
     output.mkdir(parents=True, exist_ok=True)
-    workspace = output / ("isolated-installer-" + secrets.token_hex(6))
+    workspace = runner_temp / ("installer-" + secrets.token_hex(6))
     workspace.mkdir()
     shortcuts = []
     result = {"passed": False, "tests": smoke.RESULTS}

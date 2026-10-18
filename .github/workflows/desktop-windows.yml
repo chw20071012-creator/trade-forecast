@@ -1,0 +1,74 @@
+name: Windows desktop build and smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [desktop-v0.2.0]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop:
+    runs-on: windows-2022
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: false
+
+      - name: Test and build native launcher
+        shell: pwsh
+        working-directory: desktop/launcher
+        run: |
+          go test ./...
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          go vet ./...
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:CGO_ENABLED = '0'
+          go build -trimpath -ldflags='-s -w -H=windowsgui' -o "$env:RUNNER_TEMP\TradeAgent.exe" .
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Assemble verified Windows runtime and offline package
+        shell: pwsh
+        run: |
+          python desktop/build_windows_bundle.py --cache "$env:RUNNER_TEMP\desktop-cache" --output "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --launcher "$env:RUNNER_TEMP\TradeAgent.exe" --extra-root desktop/distribution --zip "$env:RUNNER_TEMP\desktop-artifacts\TradeAgent-Desktop-0.2.0-Windows-x64.zip"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Run native Windows lifecycle and migration checks
+        shell: pwsh
+        run: |
+          python -X utf8 desktop/windows_smoke.py --bundle "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --output "$env:RUNNER_TEMP\desktop-smoke-output"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Upload smoke diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-windows-smoke-diagnostics
+          path: |
+            ${{ runner.temp }}/desktop-smoke-output/*.json
+            ${{ runner.temp }}/desktop-smoke-output/*.log
+            ${{ runner.temp }}/desktop-smoke-output/*.png
+            ${{ runner.temp }}/desktop-smoke-output/launcher-logs/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload verified desktop distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: TradeAgent-Desktop-0.2.0-Windows-x64
+          path: |
+            ${{ runner.temp }}/desktop-artifacts/*.zip
+            ${{ runner.temp }}/desktop-artifacts/*.sha256
+          if-no-files-found: error
+          retention-days: 30

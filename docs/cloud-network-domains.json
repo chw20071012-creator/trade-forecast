@@ -1,0 +1,30 @@
+{
+  "purpose": "Cloud setup draft allowlist additions; saving does not apply to the running instance",
+  "domains": [
+    "www.google.com",
+    "maps.google.com",
+    "accounts.google.com",
+    "support.google.com",
+    "developers.google.com",
+    "www.gstatic.com",
+    "maps.gstatic.com",
+    "ssl.gstatic.com",
+    "oauth2.googleapis.com",
+    "gmail.googleapis.com",
+    "www.googleapis.com",
+    "stats.customs.gov.cn",
+    "comtradeapi.un.org",
+    "comtrade.un.org",
+    "comtradeplus.un.org",
+    "dataweb.usitc.gov",
+    "ec.europa.eu",
+    "tradedata.go.kr",
+    "business.whatsapp.com",
+    "www.whatsapp.com",
+    "faq.whatsapp.com",
+    "cdn.playwright.dev",
+    "storage.googleapis.com",
+    "playwright.download.prss.microsoft.com",
+    "api.github.com"
+  ]
+}

@@ -62,6 +62,12 @@ jobs:
           python -X utf8 desktop/windows_smoke.py --bundle "$env:RUNNER_TEMP\交付 软件验证\TradeAgent" --output "$env:RUNNER_TEMP\delivery-smoke-output"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+      - name: Verify desktop installation and shortcuts
+        shell: pwsh
+        run: |
+          python -X utf8 desktop/windows_installer_smoke.py --bundle "$env:RUNNER_TEMP\交付 软件验证\TradeAgent" --output "$env:RUNNER_TEMP\desktop-installer-output"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Upload smoke diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -76,6 +82,10 @@ jobs:
             ${{ runner.temp }}/delivery-smoke-output/*.log
             ${{ runner.temp }}/delivery-smoke-output/*.png
             ${{ runner.temp }}/delivery-smoke-output/launcher-logs/
+            ${{ runner.temp }}/desktop-installer-output/*.json
+            ${{ runner.temp }}/desktop-installer-output/*.log
+            ${{ runner.temp }}/desktop-installer-output/*.png
+            ${{ runner.temp }}/desktop-installer-output/launcher-logs/
           if-no-files-found: warn
           retention-days: 14
 

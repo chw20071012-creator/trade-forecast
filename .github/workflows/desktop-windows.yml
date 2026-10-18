@@ -50,6 +50,18 @@ jobs:
           python -X utf8 desktop/windows_smoke.py --bundle "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --output "$env:RUNNER_TEMP\desktop-smoke-output"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+      - name: Verify the exact downloadable desktop package
+        if: hashFiles('downloads/TradeAgent-Desktop-0.2.0-Windows-x64.zip') != ''
+        shell: pwsh
+        run: |
+          $zip = 'downloads/TradeAgent-Desktop-0.2.0-Windows-x64.zip'
+          $expected = ((Get-Content ($zip + '.sha256') -Raw).Trim() -split '\s+')[0]
+          $actual = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($actual -ne $expected) { throw 'Download package SHA256 mismatch' }
+          Expand-Archive -LiteralPath $zip -DestinationPath "$env:RUNNER_TEMP\交付 软件验证"
+          python -X utf8 desktop/windows_smoke.py --bundle "$env:RUNNER_TEMP\交付 软件验证\TradeAgent" --output "$env:RUNNER_TEMP\delivery-smoke-output"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Upload smoke diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -60,6 +72,10 @@ jobs:
             ${{ runner.temp }}/desktop-smoke-output/*.log
             ${{ runner.temp }}/desktop-smoke-output/*.png
             ${{ runner.temp }}/desktop-smoke-output/launcher-logs/
+            ${{ runner.temp }}/delivery-smoke-output/*.json
+            ${{ runner.temp }}/delivery-smoke-output/*.log
+            ${{ runner.temp }}/delivery-smoke-output/*.png
+            ${{ runner.temp }}/delivery-smoke-output/launcher-logs/
           if-no-files-found: warn
           retention-days: 14
 

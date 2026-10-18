@@ -125,6 +125,12 @@ class Windows:
         self.user.SendMessageW.restype = wintypes.LPARAM
         self.user.GetDlgItem.argtypes = [wintypes.HWND, ctypes.c_int]
         self.user.GetDlgItem.restype = wintypes.HWND
+        self.user.EnumChildWindows.argtypes = [wintypes.HWND, self.callback_type, wintypes.LPARAM]
+        self.user.GetWindowTextW.argtypes = [wintypes.HWND, wintypes.LPWSTR, ctypes.c_int]
+        self.user.GetDlgCtrlID.argtypes = [wintypes.HWND]
+        self.user.GetDlgCtrlID.restype = ctypes.c_int
+        self.user.IsWindowVisible.argtypes = [wintypes.HWND]
+        self.user.IsWindowEnabled.argtypes = [wintypes.HWND]
 
     def windows(self, pid, class_name=None):
         matches = []
@@ -143,18 +149,47 @@ class Windows:
         self.user.EnumWindows(callback, 0)
         return matches
 
-    def click_dialog(self, pid, button, timeout=10):
-        dialog = wait_for(lambda: self.windows(pid, "#32770"), timeout=timeout, description="launcher message dialog")[0]
-        handle = self.user.GetDlgItem(dialog, button)
-        if not handle:
-            raise AssertionError(f"Dialog does not contain expected button {button}")
+    def dialog_text(self, dialog):
+        controls = []
+
+        @self.callback_type
+        def collect(hwnd, _):
+            text = ctypes.create_unicode_buffer(8192)
+            self.user.GetWindowTextW(hwnd, text, len(text))
+            controls.append(f"id={self.user.GetDlgCtrlID(hwnd)} text={text.value!r}")
+            return True
+
+        collect(dialog, 0)
+        self.user.EnumChildWindows(dialog, collect, 0)
+        return "; ".join(controls)
+
+    def click_dialog(self, pid, button, timeout=10, expected_text=None):
+        snapshots = []
+
+        def ready_dialog():
+            snapshots.clear()
+            for dialog in self.windows(pid, "#32770"):
+                text = self.dialog_text(dialog)
+                snapshots.append(text)
+                handle = self.user.GetDlgItem(dialog, button)
+                # EnumWindows can observe the dialog HWND before its child
+                # controls are constructed. Wait for the initialized button.
+                if handle and self.user.IsWindowVisible(handle) and self.user.IsWindowEnabled(handle):
+                    if expected_text is None or expected_text in text:
+                        return handle
+            return None
+
+        try:
+            handle = wait_for(ready_dialog, timeout=timeout, description=f"initialized dialog button {button}, text={expected_text!r}")
+        except AssertionError as exc:
+            raise AssertionError(f"{exc}; actual dialogs: {snapshots!r}") from exc
         self.user.SendMessageW(handle, 0x00F5, 0, 0)  # BM_CLICK, this test's process only.
 
     def close(self, pid, *, confirm):
         window = wait_for(lambda: self.windows(pid, WINDOW_CLASS), description="controller window")[0]
         self.user.PostMessageW(window, 0x0010, 0, 0)  # WM_CLOSE
         if confirm:
-            self.click_dialog(pid, 6)  # IDYES
+            self.click_dialog(pid, 6, expected_text="是否退出外贸工作台")  # IDYES
 
 
 def clean_env(local_appdata, data, token):
@@ -283,10 +318,16 @@ print("All production native extensions imported:", len(imported))
 
     occupied_code = r'''
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import socket
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200); self.end_headers(); self.wfile.write(b"occupied-port-test-sentinel")
-HTTPServer(("127.0.0.1", 8765), Handler).serve_forever()
+class ExclusiveServer(HTTPServer):
+    allow_reuse_address = False
+    def server_bind(self):
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+ExclusiveServer(("127.0.0.1", 8765), Handler).serve_forever()
 '''
     occupied = popen(prefix + ["-c", occupied_code], cwd=application, env=env, log=output / "occupied-server.log")
 
@@ -297,9 +338,11 @@ HTTPServer(("127.0.0.1", 8765), Handler).serve_forever()
             return False
 
     wait_for(sentinel, description="occupied port test server")
+    assert not is_port_free(), "Test fixture must exclusively own port 8765"
+    assert (gui_data / "trade.sqlite3").is_file(), "Existing migrated GUI data disappeared before occupied-port test"
     blocked = popen([str(executable)], cwd=bundle, env=env, log=output / "occupied-launch.log")
     wait_for(lambda: ui.windows(blocked.pid, WINDOW_CLASS), description="blocked launcher controller")
-    ui.click_dialog(blocked.pid, 1, timeout=20)  # Port warning's IDOK.
+    ui.click_dialog(blocked.pid, 1, timeout=20, expected_text="占用端口 8765")  # Port warning's IDOK.
     assert occupied.poll() is None and sentinel(), "Launcher interrupted the pre-existing process"
     ui.close(blocked.pid, confirm=False)
     assert blocked.wait(timeout=15) == 0

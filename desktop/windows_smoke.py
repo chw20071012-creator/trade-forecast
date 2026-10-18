@@ -222,22 +222,28 @@ def smoke(bundle, output, workspace):
     imports = r'''
 import importlib, pathlib, sys
 root = pathlib.Path(sys.executable).parent
-count = 0
+imported = set()
 for base in (root / "DLLs", root / "Lib" / "site-packages"):
     for file in sorted(base.rglob("*.pyd")):
         path = file.relative_to(base)
-        module = ".".join((*path.parts[:-1], path.name.split(".")[0]))
+        stem = path.name.split(".")[0]
+        if any(part.lower() in {"test", "tests"} for part in path.parts[:-1]) or stem.lower().startswith("_test"):
+            print("Skip non-runtime test fixture:", path, flush=True)
+            continue
+        module = ".".join((*path.parts[:-1], stem))
         importlib.import_module(module)
         print("Native import OK:", module, flush=True)
-        count += 1
+        imported.add(module)
 for module in ("fastapi", "uvicorn", "httpx", "openpyxl", "playwright.sync_api", "trade_agent.desktop_server", "trade_agent.desktop_migrate"):
     importlib.import_module(module)
     print("Import OK:", module, flush=True)
-assert count >= 20, count
-print("All native extensions imported:", count)
+required_native = {"_ssl", "_sqlite3", "_ctypes", "_decimal", "greenlet._greenlet", "pydantic_core._pydantic_core", "lxml.etree", "lxml.objectify"}
+assert required_native <= imported, sorted(required_native - imported)
+assert len(imported) >= 20, len(imported)
+print("All production native extensions imported:", len(imported))
 '''
     run(prefix + ["-c", imports], cwd=application, env=env, log=output / "native-imports.log")
-    note("bundled native extensions import", "All bundled .pyd modules; Chinese and space-containing installation path")
+    note("bundled native extensions import", "All production .pyd modules; Chinese and space-containing installation path")
 
     direct = popen(prefix + ["-m", "trade_agent.desktop_server", "--host", "127.0.0.1", "--port", "8765"], cwd=application, env=env, log=output / "direct-server.log")
     expected_hash = hashlib.sha256(token.encode()).hexdigest()

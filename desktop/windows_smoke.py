@@ -163,7 +163,7 @@ class Windows:
         self.user.EnumChildWindows(dialog, collect, 0)
         return "; ".join(controls)
 
-    def click_dialog(self, pid, button, timeout=10, expected_text=None):
+    def click_dialog(self, pid, button, timeout=10, expected_text=None, button_label=None):
         snapshots = []
 
         def ready_dialog():
@@ -172,6 +172,25 @@ class Windows:
                 text = self.dialog_text(dialog)
                 snapshots.append(text)
                 handle = self.user.GetDlgItem(dialog, button)
+                if not handle and button_label is not None and expected_text and expected_text in text:
+                    # Windows can expose a sole OK control as IDCANCEL. Select
+                    # its visible label only after matching the exact warning.
+                    matches = []
+
+                    @self.callback_type
+                    def matching_button(hwnd, _):
+                        name = ctypes.create_unicode_buffer(256)
+                        label = ctypes.create_unicode_buffer(256)
+                        self.user.GetClassNameW(hwnd, name, len(name))
+                        self.user.GetWindowTextW(hwnd, label, len(label))
+                        if (name.value == "Button" and label.value.replace("&", "") == button_label
+                                and self.user.IsWindowVisible(hwnd) and self.user.IsWindowEnabled(hwnd)):
+                            matches.append(int(hwnd))
+                        return True
+
+                    self.user.EnumChildWindows(dialog, matching_button, 0)
+                    if len(matches) == 1:
+                        handle = matches[0]
                 # EnumWindows can observe the dialog HWND before its child
                 # controls are constructed. Wait for the initialized button.
                 if handle and self.user.IsWindowVisible(handle) and self.user.IsWindowEnabled(handle):
@@ -342,7 +361,7 @@ ExclusiveServer(("127.0.0.1", 8765), Handler).serve_forever()
     assert (gui_data / "trade.sqlite3").is_file(), "Existing migrated GUI data disappeared before occupied-port test"
     blocked = popen([str(executable)], cwd=bundle, env=env, log=output / "occupied-launch.log")
     wait_for(lambda: ui.windows(blocked.pid, WINDOW_CLASS), description="blocked launcher controller")
-    ui.click_dialog(blocked.pid, 1, timeout=20, expected_text="占用端口 8765")  # Port warning's IDOK.
+    ui.click_dialog(blocked.pid, 1, timeout=20, expected_text="占用端口 8765", button_label="OK")
     assert occupied.poll() is None and sentinel(), "Launcher interrupted the pre-existing process"
     ui.close(blocked.pid, confirm=False)
     assert blocked.wait(timeout=15) == 0

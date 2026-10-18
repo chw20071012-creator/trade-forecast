@@ -63,6 +63,10 @@ try {
     Start-Process -FilePath (Join-Path $destination 'TradeAgent.exe') -WorkingDirectory $destination
 } catch {
     Write-Host ('安装未完成：' + $_.Exception.Message) -ForegroundColor Red
+    Write-Host ('错误类型：' + $_.Exception.GetType().FullName + ' / HRESULT ' + $_.Exception.HResult)
+    if ($null -ne $_.Exception.InnerException) { Write-Host ('内部错误：' + $_.Exception.InnerException.GetType().FullName + ' / ' + $_.Exception.InnerException.Message) }
+    Write-Host ('错误位置：' + $_.InvocationInfo.PositionMessage)
+    Write-Host ('调用位置：' + $_.ScriptStackTrace)
     Read-Host '按回车关闭，可保留此提示以便排查'
     exit 1
 }

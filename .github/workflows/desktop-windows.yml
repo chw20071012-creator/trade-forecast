@@ -30,18 +30,18 @@ jobs:
         shell: pwsh
         working-directory: desktop/launcher
         run: |
-          go test ./...
+          python -X utf8 ../ci_command.py go test ./...
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          go vet ./...
+          python -X utf8 ../ci_command.py go vet ./...
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $env:CGO_ENABLED = '0'
-          go build -trimpath -ldflags='-s -w -H=windowsgui' -o "$env:RUNNER_TEMP\TradeAgent.exe" .
+          python -X utf8 ../ci_command.py go build -trimpath -ldflags='-s -w -H=windowsgui' -o "$env:RUNNER_TEMP\TradeAgent.exe" .
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Assemble verified Windows runtime and offline package
         shell: pwsh
         run: |
-          python -X utf8 desktop/build_windows_bundle.py --cache "$env:RUNNER_TEMP\desktop-cache" --output "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --launcher "$env:RUNNER_TEMP\TradeAgent.exe" --extra-root desktop/distribution --zip "$env:RUNNER_TEMP\desktop-artifacts\TradeAgent-Desktop-0.2.0-Windows-x64.zip"
+          python -X utf8 desktop/ci_command.py python -X utf8 desktop/build_windows_bundle.py --cache "$env:RUNNER_TEMP\desktop-cache" --output "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --launcher "$env:RUNNER_TEMP\TradeAgent.exe" --extra-root desktop/distribution --zip "$env:RUNNER_TEMP\desktop-artifacts\TradeAgent-Desktop-0.2.0-Windows-x64.zip"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Run native Windows lifecycle and migration checks

@@ -41,7 +41,7 @@ jobs:
       - name: Assemble verified Windows runtime and offline package
         shell: pwsh
         run: |
-          python desktop/build_windows_bundle.py --cache "$env:RUNNER_TEMP\desktop-cache" --output "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --launcher "$env:RUNNER_TEMP\TradeAgent.exe" --extra-root desktop/distribution --zip "$env:RUNNER_TEMP\desktop-artifacts\TradeAgent-Desktop-0.2.0-Windows-x64.zip"
+          python -X utf8 desktop/build_windows_bundle.py --cache "$env:RUNNER_TEMP\desktop-cache" --output "$env:RUNNER_TEMP\外贸 测试软件\TradeAgent" --launcher "$env:RUNNER_TEMP\TradeAgent.exe" --extra-root desktop/distribution --zip "$env:RUNNER_TEMP\desktop-artifacts\TradeAgent-Desktop-0.2.0-Windows-x64.zip"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Run native Windows lifecycle and migration checks

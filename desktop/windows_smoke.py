@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import secrets
 import shutil
 import socket
@@ -29,6 +30,35 @@ WINDOW_CLASS = "TradeAgentDesktopControllerV1"
 HTTP = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 OWNED: list[subprocess.Popen] = []
 RESULTS: list[dict] = []
+SECRET_VALUES: list[str] = []
+
+
+def failure_annotation(error, output, workspace):
+    """Expose bounded diagnostics through the permitted GitHub checks API."""
+    sections = [error]
+    paths = sorted(output.glob("*.log"))
+    launcher_logs = workspace / "隔离 用户资料" / "TradeAgent" / "logs"
+    paths.extend(sorted(launcher_logs.glob("*.log")))
+    for path in paths:
+        try:
+            # Read a bounded suffix even if a child unexpectedly writes a large log.
+            with path.open("rb") as source:
+                source.seek(max(0, path.stat().st_size - 32768))
+                tail = "\n".join(source.read().decode("utf-8", errors="replace").splitlines()[-30:])
+            sections.append(f"\n--- {path.name}: last 30 lines ---\n{tail}")
+        except OSError as exc:
+            sections.append(f"\n--- {path.name}: unreadable ({type(exc).__name__}) ---")
+    diagnostic = "\n".join(sections)
+    for value in SECRET_VALUES:
+        diagnostic = diagnostic.replace(value, "[redacted]")
+    diagnostic = re.sub(r"(?i)(\b(?:TRADE_DESKTOP_SESSION|X-Desktop-Session|api[_-]?key|access_token|refresh_token|client_secret)\b[\s\"']*[:=][\s\"']*)[^\s\"',;}]+", r"\1[redacted]", diagnostic)
+    # Both launcher and driver session secrets are hexadecimal. Redact unknown
+    # long hexadecimal values too, including harmless hashes, for diagnostics.
+    diagnostic = re.sub(r"(?<![0-9A-Za-z])[0-9a-fA-F]{32,}(?![0-9A-Za-z])", "[redacted]", diagnostic)
+    escaped = diagnostic.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+    if len(escaped) > 11800:
+        escaped = escaped[:11750] + "%0A[diagnostic truncated]"
+    print("::error title=Desktop smoke failure::" + escaped, flush=True)
 
 
 def wait_for(function, *, timeout=45, description="condition"):
@@ -186,6 +216,7 @@ def smoke(bundle, output, workspace):
     gui_data = local / "TradeAgent" / "data"
     local.mkdir(parents=True)
     token = secrets.token_hex(32)
+    SECRET_VALUES.append(token)
     env = clean_env(local, old_data, token)
     prefix = [str(python), "-E", "-s", "-X", "utf8"]
     imports = r'''
@@ -293,6 +324,7 @@ def main():
     except Exception:
         result["error"] = traceback.format_exc()
         print(result["error"], file=sys.stderr, flush=True)
+        failure_annotation(result["error"], output, workspace)
         capture_screen(output)
     finally:
         # Only the process IDs created by this test may be terminated. Never kill

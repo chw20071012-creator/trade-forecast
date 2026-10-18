@@ -11,7 +11,7 @@ try {
     $null = New-Item -ItemType Directory -Force -Path $programs
     $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
     $stage = Join-Path $programs ('.install-' + [Guid]::NewGuid().ToString('N'))
-    $destination = Join-Path $programs ('desktop-0.2.0-' + $stamp)
+    $destination = Join-Path $programs ('desktop-0.2.0-' + $stamp + '-' + [Guid]::NewGuid().ToString('N').Substring(0, 6))
     $null = New-Item -ItemType Directory -Path $stage
     try {
         $entries = @($manifest.files)
@@ -33,7 +33,7 @@ try {
         }
         Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $stage 'bundle-manifest.json')
         Copy-Item -LiteralPath (Join-Path $source 'SHA256SUMS.txt') -Destination (Join-Path $stage 'SHA256SUMS.txt')
-        Move-Item -LiteralPath $stage -Destination $destination
+        [IO.Directory]::Move($stage, $destination)
     } finally {
         if (Test-Path -LiteralPath $stage) { Remove-Item -LiteralPath $stage -Recurse -Force }
     }

@@ -21,8 +21,57 @@ import sqlite3
 import subprocess
 import sys
 import traceback
+import uuid
 
 import windows_smoke as smoke
+
+
+def read_unicode_shortcut(path):
+    """Read a .lnk through IShellLinkW/IPersistFile, independently of WScript."""
+    class GUID(ctypes.Structure):
+        _fields_ = [("data1", wintypes.DWORD), ("data2", wintypes.WORD),
+                    ("data3", wintypes.WORD), ("data4", wintypes.BYTE * 8)]
+
+    def guid(value):
+        return GUID.from_buffer_copy(uuid.UUID(value).bytes_le)
+
+    def checked(result, operation):
+        if result < 0:
+            raise OSError(f"{operation} failed: HRESULT 0x{result & 0xffffffff:08X}")
+
+    def method(interface, slot, *argtypes):
+        vtable = ctypes.cast(interface, ctypes.POINTER(ctypes.POINTER(ctypes.c_void_p))).contents
+        return ctypes.WINFUNCTYPE(ctypes.c_long, ctypes.c_void_p, *argtypes)(vtable[slot])
+
+    ole = ctypes.WinDLL("ole32")
+    ole.CoInitializeEx.argtypes = [ctypes.c_void_p, wintypes.DWORD]
+    ole.CoInitializeEx.restype = ctypes.c_long
+    ole.CoCreateInstance.argtypes = [ctypes.POINTER(GUID), ctypes.c_void_p, wintypes.DWORD, ctypes.POINTER(GUID), ctypes.POINTER(ctypes.c_void_p)]
+    ole.CoCreateInstance.restype = ctypes.c_long
+    ole.CoUninitialize.argtypes = []
+    checked(ole.CoInitializeEx(None, 2), "CoInitializeEx")
+    link, persist = ctypes.c_void_p(), ctypes.c_void_p()
+    try:
+        clsid = guid("00021401-0000-0000-C000-000000000046")
+        iid_link = guid("000214F9-0000-0000-C000-000000000046")
+        iid_file = guid("0000010B-0000-0000-C000-000000000046")
+        checked(ole.CoCreateInstance(ctypes.byref(clsid), None, 1, ctypes.byref(iid_link), ctypes.byref(link)), "CoCreateInstance(IShellLinkW)")
+        checked(method(link, 0, ctypes.POINTER(GUID), ctypes.POINTER(ctypes.c_void_p))(link, ctypes.byref(iid_file), ctypes.byref(persist)), "QueryInterface(IPersistFile)")
+        checked(method(persist, 5, wintypes.LPCWSTR, wintypes.DWORD)(persist, str(path), 0), "IPersistFile.Load")
+        target = ctypes.create_unicode_buffer(32768)
+        directory = ctypes.create_unicode_buffer(32768)
+        icon = ctypes.create_unicode_buffer(32768)
+        icon_index = ctypes.c_int()
+        checked(method(link, 3, wintypes.LPWSTR, ctypes.c_int, ctypes.c_void_p, wintypes.DWORD)(link, target, len(target), None, 4), "IShellLinkW.GetPath")
+        checked(method(link, 8, wintypes.LPWSTR, ctypes.c_int)(link, directory, len(directory)), "IShellLinkW.GetWorkingDirectory")
+        checked(method(link, 16, wintypes.LPWSTR, ctypes.c_int, ctypes.POINTER(ctypes.c_int))(link, icon, len(icon), ctypes.byref(icon_index)), "IShellLinkW.GetIconLocation")
+        return {"target": target.value, "directory": directory.value, "icon": icon.value, "icon_index": icon_index.value}
+    finally:
+        if persist.value:
+            method(persist, 2)(persist)
+        if link.value:
+            method(link, 2)(link)
+        ole.CoUninitialize()
 
 
 def sha256(path):
@@ -134,21 +183,16 @@ $paths = @([Environment]::GetFolderPath('DesktopDirectory'), [Environment]::GetF
         assert path.is_file() and sha256(path) == entry["sha256"], f"Installed file mismatch: {entry['path']}"
     smoke.note("PowerShell 5.1 CMD installation", f"Version {shell_metadata['version']}; all {len(manifest['files'])} installed files match pinned manifest")
 
-    report = output / "shortcuts.json"
-    powershell(r'''param([string]$ExpectedDirectory, [string]$Output)
-$ErrorActionPreference = 'Stop'
-$shell = New-Object -ComObject WScript.Shell
-$rows = @()
-foreach ($folder in @('DesktopDirectory', 'Programs')) {
-  $path = Join-Path ([Environment]::GetFolderPath($folder)) '外贸工作台.lnk'
-  if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Missing shortcut: $folder" }
-  $link = $shell.CreateShortcut($path)
-  if ($link.TargetPath -ine (Join-Path $ExpectedDirectory 'TradeAgent.exe')) { throw "Incorrect target: $folder" }
-  if ($link.WorkingDirectory -ine $ExpectedDirectory) { throw "Incorrect working directory: $folder" }
-  $rows += @{ location = $folder; target_verified = $true; working_directory_verified = $true }
-}
-$rows | ConvertTo-Json | Set-Content -LiteralPath $Output -Encoding UTF8
-''', [destination, report], workspace=workspace, env=env, log=output / "shortcuts.log")
+    rows = []
+    for location, value in zip(("DesktopDirectory", "Programs"), shell_metadata["paths"]):
+        path = Path(value)
+        assert path.is_file(), f"Missing shortcut: {location}"
+        link = read_unicode_shortcut(path)
+        assert os.path.normcase(link["target"]) == os.path.normcase(str(executable)), f"Incorrect Unicode shortcut target: {location}"
+        assert os.path.normcase(link["directory"]) == os.path.normcase(str(destination)), f"Incorrect shortcut working directory: {location}"
+        assert os.path.normcase(link["icon"]) == os.path.normcase(str(executable)) and link["icon_index"] == 0, f"Incorrect shortcut icon: {location}"
+        rows.append({"location": location, "target_verified": True, "working_directory_verified": True, "icon_verified": True, "reader": "IShellLinkW"})
+    (output / "shortcuts.json").write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
     smoke.note("Desktop and Start Menu shortcuts", "Both target the exact installed EXE and its working directory")
 
     ui = smoke.Windows()

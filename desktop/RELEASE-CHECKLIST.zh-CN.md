@@ -10,6 +10,7 @@
 | 原生依赖导入检查 | 扫描进入 greenlet 的开发测试组件，错误要求可选 psutil | 排除明确的上游 test/tests 和 _test 模块；仍导入全部 30 个生产原生扩展，并对关键扩展逐项断言 |
 | 端口占用弹窗测试 | 实际控件文本为 OK、ID 为 2，测试误假定 ID 为 1 | 等待子控件完成创建；匹配预期警告内容及唯一可见按钮；保留独占端口与原进程存活断言 |
 | PowerShell 5.1 安装 | 当前 Windows 测试环境未能加载 Get-FileHash；继承 pwsh7 模块环境是可能原因，尚未单独证明 | 改为 .NET SHA256 流式校验；保留每个文件的完整性检查，避免依赖模块自动加载 |
+| Unicode 快捷方式创建 | Windows 实测失败行是 WScript.Shell 的 TargetPath 赋值，HRESULT E_INVALIDARG；与 GitHub 同类报告一致 | 用原生 IShellLinkW / IPersistFile 宽字符接口，测试独立读取宽字符目标与工作目录，不改成 ASCII 路径逃避检查 |
 | Windows SQLite 生命周期复核 | SQLite 上下文管理器不会自动关闭连接，可能阻止改名/迁移 | 明确关闭数据库连接，保留提交语义；已有回归验证 |
 | 安装目录命名复核 | 秒级时间戳可能让并发安装重名 | 时间戳加 GUID；目录移动遇到已存在目标直接失败，避免嵌套 |
 
@@ -26,4 +27,6 @@
 
 ## 发布状态
 
-当前仍在定位安装器的泛化错误。完整 Windows 安装验证通过前，不宣布正式交付。最终文件校验和以通过检查的下载包为准。
+安装错误已经定位到 WScript.Shell 设置中文目标路径。修正后的完整 Windows 安装验证通过前，不宣布正式交付。最终文件校验和以通过检查的下载包为准。
+
+参考问题：[非 ASCII 路径下 WScript.Shell 快捷方式 E_INVALIDARG](https://github.com/Rice-dog/code-codex/issues/59)。该报告只作为定位线索；本项目以自己的失败行和回归测试验证结论。

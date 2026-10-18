@@ -95,6 +95,9 @@ func message(owner uintptr, text string, flags uintptr) uintptr {
 }
 
 func main() {
+	if handled, code := runShortcutCLI(os.Args[1:]); handled {
+		os.Exit(code)
+	}
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 	defer func() {

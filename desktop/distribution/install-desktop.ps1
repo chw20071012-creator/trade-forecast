@@ -47,15 +47,14 @@ try {
         if (Test-Path -LiteralPath $stage) { Remove-Item -LiteralPath $stage -Recurse -Force }
     }
     Write-Progress -Activity '正在安装外贸工作台' -Completed
-    $shell = New-Object -ComObject WScript.Shell
-    foreach ($directory in @([Environment]::GetFolderPath('DesktopDirectory'), [Environment]::GetFolderPath('Programs'))) {
-        $null = New-Item -ItemType Directory -Force -Path $directory
-        $shortcut = $shell.CreateShortcut((Join-Path $directory '外贸工作台.lnk'))
-        $shortcut.TargetPath = Join-Path $destination 'TradeAgent.exe'
-        $shortcut.WorkingDirectory = $destination
-        $shortcut.IconLocation = (Join-Path $destination 'TradeAgent.exe') + ',0'
-        $shortcut.Description = '外贸工作台：客户、产品、报价、邮件与订单'
-        $shortcut.Save()
+    $shortcutDirs = @([Environment]::GetFolderPath('DesktopDirectory'), [Environment]::GetFolderPath('Programs'))
+    foreach ($directory in $shortcutDirs) { $null = New-Item -ItemType Directory -Force -Path $directory }
+    $shortcutArgs = @('--install-shortcuts', '--desktop-dir', ('"' + $shortcutDirs[0] + '"'), '--start-menu-dir', ('"' + $shortcutDirs[1] + '"'))
+    $shortcutError = Join-Path $destination 'shortcut-install.log'
+    $shortcutProcess = Start-Process -FilePath (Join-Path $destination 'TradeAgent.exe') -ArgumentList $shortcutArgs -Wait -PassThru -RedirectStandardError $shortcutError
+    if ($shortcutProcess.ExitCode -ne 0) {
+        $detail = [IO.File]::ReadAllText($shortcutError)
+        throw ("创建桌面快捷方式失败（" + $shortcutProcess.ExitCode + "）：" + $detail)
     }
     Write-Host '安装完成！以后双击桌面的“外贸工作台”即可使用。' -ForegroundColor Green
     Write-Host '业务资料保存于：' (Join-Path $env:LOCALAPPDATA 'TradeAgent\data')

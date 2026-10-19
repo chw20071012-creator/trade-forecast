@@ -1,0 +1,277 @@
+{
+  "format": 1,
+  "version": "1.1.0",
+  "installer": "交付工坊桌面版安装.exe",
+  "installer_bytes": 654955996,
+  "installer_sha256": "8d6153371033aaf3e338baa4dcc2117982213270babdd51d353ce1d1aec21160",
+  "part_count": 33,
+  "parts": [
+    {
+      "file": "delivery-studio-1.1.0-part-0001.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "d2db52bbc199d7136da99ceca499f531a41e86ada687cdb3073f94e06f9d4509",
+      "member": "payload.part0001",
+      "bytes": 19922944,
+      "sha256": "a7da423ca7131cf51569b00ce46ee575e991a36347485ff4c2f537ee04f8ef6a"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0002.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "a66184606519a747320ae0f7b97f20645ff648cc983e1cec96c7884abf3eb336",
+      "member": "payload.part0002",
+      "bytes": 19922944,
+      "sha256": "5a83551550a2b0542f8338cbc65893107410c9e7c49337a75c07937fb18a6369"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0003.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "65f2511a4fb3cd46531dfe8af1a5344d8678f9e676ae99b8cc43034f5b829824",
+      "member": "payload.part0003",
+      "bytes": 19922944,
+      "sha256": "e33726386dfc02b9dc85966f10f53639c332d7e396a3e5532a305d4e201d8bf0"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0004.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "e399d01d93e8c796d661f33ee906a8ea02fb301a9d26067133cae12184adc14e",
+      "member": "payload.part0004",
+      "bytes": 19922944,
+      "sha256": "876677d340e03b657d14934860a8c351ac711017516b45abd7ea8f7423192177"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0005.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "a27142d2958ded0e767c03ac29f1c9e5d700b7ab8d72fe3897ba9c11d74cce4f",
+      "member": "payload.part0005",
+      "bytes": 19922944,
+      "sha256": "75d61fa4a95c4caefea69d54d29806eca31ea9d344a68162827e39aa20866645"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0006.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "d3c2e3ff4274852c6b0f4bfa001beb7e3c9e1b601282b285816ee93e02a3e172",
+      "member": "payload.part0006",
+      "bytes": 19922944,
+      "sha256": "4975f96b044bd8a4a03b764700c7b57e200c8f5b1479ed388c7ce9ad4669b2a1"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0007.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "fba49c3aad19caf45b2c7941143da03e004a0f9b977614e6eee16808ccc400fa",
+      "member": "payload.part0007",
+      "bytes": 19922944,
+      "sha256": "b02c393dd883a673514443b639b3ec1bc32865f80c33388999718c15e1305b36"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0008.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "6053e9645d94920a20dcde11153117676777e2c279819ec688bce732a9b2dda9",
+      "member": "payload.part0008",
+      "bytes": 19922944,
+      "sha256": "fd6e14b621444bac54bc99f529d79e29115bafc68f9a4cc697b347fcb3a2e65f"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0009.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "9f3981b3654433bde3389ae4069da718961377d67f1dee97e11b5a7edc2e580d",
+      "member": "payload.part0009",
+      "bytes": 19922944,
+      "sha256": "afbddad8eda498db77076fb88a364ed4e579207c4a15d0f909de93e3f34fbd0e"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0010.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "11b280d1ca93d067eae96409c36ded30d4df1b09389e8c33b4527c7b6262cb52",
+      "member": "payload.part0010",
+      "bytes": 19922944,
+      "sha256": "829e6d0c5b99aaabbe6898159d6b679d029bd147047c61992af90a26c94206c1"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0011.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "e1175d34912cdf14820748144400d5fc6e9c15e7315294bf56a8a4bae58e33f4",
+      "member": "payload.part0011",
+      "bytes": 19922944,
+      "sha256": "73e3792dd016afef50be431feccfc99b1874ee3b3204be0392d93692c972a411"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0012.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "194b36593ce5be5dcbbc6a6b3d76647503db4c2e16b87ed864368268b0153c66",
+      "member": "payload.part0012",
+      "bytes": 19922944,
+      "sha256": "49d8a4b51c95fc0a9dbee8d60b1e175677eb8a2f4d1ce90bd54bfa93c2d5fe15"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0013.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "318f5c52d23ba31090c29ecec70e5bccb5c99f5b021c1259141ac36b0e64e3d9",
+      "member": "payload.part0013",
+      "bytes": 19922944,
+      "sha256": "d0ad68bade6a312ca291a5803a71c5eb9a4286efea36ce69540fd956163a23a6"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0014.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "5045661c1ef7ca21c6ef096b051b37cabbcd693b4cc04de8fcc743ea83d994ca",
+      "member": "payload.part0014",
+      "bytes": 19922944,
+      "sha256": "9c125c922d120a3e755b1f497e8b25d248e39c3ac0068875754536cb7a088f9d"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0015.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "65592037033bf21e817292f90c6fd9039bdb005154c5028630f2eed5a4dd48e3",
+      "member": "payload.part0015",
+      "bytes": 19922944,
+      "sha256": "13b8fbc90bbd2112f7a3af3e4d83001ae172f8be597d7f3b2977c03b2c4c7dc2"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0016.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "b01f9ac940a01331592f11d978f64e2996ed7cd4b81caeafead7f27505f3ae96",
+      "member": "payload.part0016",
+      "bytes": 19922944,
+      "sha256": "44818edd7bb8ba3850afa09bc6417f1a87eff6a1b148df8bf9d2b752bdfa800d"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0017.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "25a086d421a9db90d9666a1bb7c27b094f8b79ce513641015d292c59fb5724fa",
+      "member": "payload.part0017",
+      "bytes": 19922944,
+      "sha256": "89cd0f22e9eda9aca61c5feefe097303768a8990c6f6d49e5b8dd7164c659b76"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0018.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "663f47ba477ba1f0d49be9be1146857c22c9ecd8ca59012759c189af1e3b3c84",
+      "member": "payload.part0018",
+      "bytes": 19922944,
+      "sha256": "6cabe4050f4d81e7083f71daaba3aab6dde56844715d77480a9eed1e7baf87a6"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0019.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "7bab4fde2b1053ec9ea927458fcf037fbdcdb03c85fb2cceb08b4a666c3dbf58",
+      "member": "payload.part0019",
+      "bytes": 19922944,
+      "sha256": "7cb303e4724917867620a19c06bf693f70bf62129b0cddd3de7643eeea47cab0"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0020.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "32ec0e47fb5c8001b0b2b4f0ab8736b676b42682e6e1013d21ee4e086ec7e5c5",
+      "member": "payload.part0020",
+      "bytes": 19922944,
+      "sha256": "ffb2b55655cd9ef729f272ad9274a24e9a6c5b49c504b41f25da0609d77f947a"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0021.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "792084770cf1e082d016836ef045b4dc827f610d790044772c83c99e1828ecfa",
+      "member": "payload.part0021",
+      "bytes": 19922944,
+      "sha256": "d32e2f33eea81aa686e4bffd6b082b6fc84a167b819675021bab6ce00669ebaa"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0022.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "b237a0e0b36ccb68cc082823e9e3e18f86efec0d487367ada6040f874f043e88",
+      "member": "payload.part0022",
+      "bytes": 19922944,
+      "sha256": "783c136993810837a8c8868c37e94ed74108012e6250a7f7561840c1ec3b7621"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0023.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "a4969e3f8f4a535aad74547e184365f5779f9541893decb42c0a1590d388692f",
+      "member": "payload.part0023",
+      "bytes": 19922944,
+      "sha256": "c0d52ea38705fcfe923fd0a8962a55423ad7b3814ae036e12b8775af2784889b"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0024.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "2d68e338e406fb6f2f493025b4bdca1e24f09a7a5a68e3baf7e46163b209150c",
+      "member": "payload.part0024",
+      "bytes": 19922944,
+      "sha256": "29d734daac7e465926c6f6d27075d84e4a6234d977484543f9573a4ac55d09ff"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0025.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "a241ca4689f5df181c24b7a2f5a6cc90d0d84562a07f505f8a00ac8934cd6a61",
+      "member": "payload.part0025",
+      "bytes": 19922944,
+      "sha256": "d1979e513c1a35ce4d7ef32f5c10e300b89e9ca2804af350eac59048c337386d"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0026.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "c56f05f026c608765cac5448e503b3c0b86d731862d82cceac9a86d95bc0c4cc",
+      "member": "payload.part0026",
+      "bytes": 19922944,
+      "sha256": "43f4bdd32fe4a3ba451aad0224eaa90335ed3a12340933295e259be0ee7a0d59"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0027.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "298b887b531e90dfe9d14f3c39cd8797cd39f26751c87d469dbab229fc85371c",
+      "member": "payload.part0027",
+      "bytes": 19922944,
+      "sha256": "0abbcd9f100acc762bad82ce7684c8bfeb8705032b5b521f623e67cadf47d925"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0028.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "1b90262c05f8fe44562361843a432136eaaed4890b7759131f74da062ad03f2c",
+      "member": "payload.part0028",
+      "bytes": 19922944,
+      "sha256": "63740beeca51bf76f59a1de22a004e5d4fccd49b0c810cbe486fb34228148d45"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0029.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "ac1ff75c7a8bc25c420f54fff93e066f9844d88d521056405b165a4ee016ca30",
+      "member": "payload.part0029",
+      "bytes": 19922944,
+      "sha256": "96b7114b2b8357f5332cee344fa8f75bdff172480ad0b02420f6d29c35712056"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0030.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "6d15bfda6fc1ba94d241b3a54c4a6d5bd3f096aef1826bfcb0d8ad9a020cc879",
+      "member": "payload.part0030",
+      "bytes": 19922944,
+      "sha256": "89ea50f2cb90f177c32fb26696fa08f75df869004e7e0edb78bc44b849b3470a"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0031.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "0f19aa9ba98f293e9fbcf364b6422c3c1f0d64dbd83c009eedd5061527cc7cce",
+      "member": "payload.part0031",
+      "bytes": 19922944,
+      "sha256": "848869ef947afdf74b8a6b7e9a8be3f9d108c9411a63e95c6abb73c68e7f5bc6"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0032.zip",
+      "archive_bytes": 19923074,
+      "archive_sha256": "ef667f06cbb923805787e201858f64fff96c89242a903bcc40abab71c889a301",
+      "member": "payload.part0032",
+      "bytes": 19922944,
+      "sha256": "6cf8ea1ae24ac07b4f8ab71b9d87b7f0991647dfa19b3ec0fa3eff06e61b3552"
+    },
+    {
+      "file": "delivery-studio-1.1.0-part-0033.zip",
+      "archive_bytes": 17421918,
+      "archive_sha256": "9cbc8d55d158477829ede8f9539822da11201bef8e8d1d57ac0e2eb44f6268d0",
+      "member": "payload.part0033",
+      "bytes": 17421788,
+      "sha256": "e8ce93e9f2b1e36d69c6f0c140d842580be7ed37061a242bb534fd01b3eca549"
+    }
+  ],
+  "delivery_status": "integrity-verified",
+  "application": "交付工坊.exe",
+  "transport": "GitHub raw files at a fixed commit; assemble before installation"
+}

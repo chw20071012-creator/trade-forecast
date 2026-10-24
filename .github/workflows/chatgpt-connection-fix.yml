@@ -14,14 +14,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify reproducible delivered patch
+      - name: Verify delivered ZIP checksum and every payload
         shell: pwsh
         run: |
-          $before = (Get-FileHash downloads/TradeAgent-ChatGPT-Connection-Fix.zip -Algorithm SHA256).Hash
-          python -X utf8 desktop/connection-fix/build_patch.py
+          python -X utf8 desktop/ci_command.py python -X utf8 desktop/connection-fix/build_patch.py --verify
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $after = (Get-FileHash downloads/TradeAgent-ChatGPT-Connection-Fix.zip -Algorithm SHA256).Hash
-          if ($before -ne $after) { throw 'Delivered patch does not match source build' }
       - name: Run Windows PowerShell 5.1 regressions and actual patch installer
         shell: pwsh
         run: |

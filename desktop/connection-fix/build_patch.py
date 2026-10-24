@@ -1,6 +1,7 @@
 from pathlib import Path
 import hashlib
 import zipfile
+import sys
 
 root = Path(__file__).resolve().parents[2]
 script = (root / 'scripts/connect-chatgpt.ps1').read_bytes()
@@ -24,9 +25,20 @@ files = {
 }
 out=root/'downloads/TradeAgent-ChatGPT-Connection-Fix.zip'
 out.parent.mkdir(exist_ok=True)
+if '--verify' in sys.argv:
+    checksum=hashlib.sha256(out.read_bytes()).hexdigest()
+    assert checksum == Path(str(out)+'.sha256').read_text().split()[0], 'Delivered ZIP checksum mismatch'
+    with zipfile.ZipFile(out) as z:
+        assert z.testzip() is None, 'ZIP CRC failure'
+        assert set(z.namelist()) == {'TradeAgent-ChatGPT-Fix/'+name for name in files}, 'Unexpected package files'
+        for name,data in files.items():
+            assert z.read('TradeAgent-ChatGPT-Fix/'+name) == data, f'Delivered payload differs from source: {name}'
+    print('PASS: delivered ZIP checksum, CRC and every payload match the source')
+    sys.exit(0)
 with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
     for name,data in files.items():
         info=zipfile.ZipInfo('TradeAgent-ChatGPT-Fix/'+name,(2026,10,24,0,0,0))
+        info.create_system=3
         info.compress_type=zipfile.ZIP_DEFLATED
         z.writestr(info,data)
 with zipfile.ZipFile(out) as z:

@@ -1,0 +1,4 @@
+scripts/connect-chatgpt.ps1 text eol=lf
+desktop/connection-fix/*.ps1 text eol=lf
+desktop/connection-fix/*.py text eol=lf
+tests/test_connect_chatgpt.ps1 text eol=lf

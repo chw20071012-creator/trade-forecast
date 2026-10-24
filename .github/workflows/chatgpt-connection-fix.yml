@@ -1,0 +1,29 @@
+name: ChatGPT connection patch Windows checks
+on:
+  workflow_dispatch:
+  push:
+    branches: [chatgpt-connect-fix]
+permissions:
+  contents: read
+jobs:
+  windows-powershell:
+    runs-on: windows-2022
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify reproducible delivered patch
+        shell: pwsh
+        run: |
+          $before = (Get-FileHash downloads/TradeAgent-ChatGPT-Connection-Fix.zip -Algorithm SHA256).Hash
+          python -X utf8 desktop/connection-fix/build_patch.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $after = (Get-FileHash downloads/TradeAgent-ChatGPT-Connection-Fix.zip -Algorithm SHA256).Hash
+          if ($before -ne $after) { throw 'Delivered patch does not match source build' }
+      - name: Run Windows PowerShell 5.1 regressions and actual patch installer
+        shell: pwsh
+        run: |
+          python -X utf8 desktop/ci_command.py powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File tests/test_connect_chatgpt.ps1 -PackagePath downloads/TradeAgent-ChatGPT-Connection-Fix.zip
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
